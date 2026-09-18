@@ -66,7 +66,11 @@ function resetApp(){
  $("measure").disabled=!stream;$("lock").disabled=true;
  $("status").textContent="Prêt pour une nouvelle mesure.";
 }
-$("start").onclick=startApp;$("measure").onclick=measureNow;$("reset").onclick=resetApp;
+$("start").onclick=startApp;
+$("measure").onclick=function(){
+  alert("MESURER fonctionne !");
+};
+$("reset").onclick=resetApp;
 </script>
 </body>
 </html>
