@@ -54,10 +54,11 @@ async function startApp(){
 }
 function measureNow(){
  if(locked)return;
- $("method").textContent="Motion Stereo — prochaine étape";
- $("confidence").textContent="Pas encore de distance calculée";
- $("status").textContent="La mesure réelle nécessitera suivi des points, calibration caméra et estimation du déplacement.";
- $("lock").disabled=true;
+
+ $("distance").textContent="TEST";
+ $("method").textContent="Le bouton MESURER fonctionne";
+ $("confidence").textContent="JavaScript actif";
+ $("status").textContent="La commande MESURER est bien reçue.";
 }
 function resetApp(){
  locked=false;$("distance").textContent="— —";$("method").textContent="Aucune mesure";
