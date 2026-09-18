@@ -44,11 +44,7 @@ async function startApp(){
  try{
   stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});
   $("video").srcObject=stream;
-  if(typeof DeviceMotionEvent!=="undefined"&&typeof DeviceMotionEvent.requestPermission==="function"){
-   const p=await DeviceMotionEvent.requestPermission();
-   if(p!=="granted") throw Error("Capteurs refusés");
-  }
-  $("start").disabled=true;$("measure").disabled=false;$("reset").disabled=false;
+    $("start").disabled=true;$("measure").disabled=false;$("reset").disabled=false;
   $("status").textContent="Caméra active. Visez précisément l'objet à mesurer.";
  }catch(e){$("status").textContent="Caméra/capteurs non disponibles. Autorisez-les et utilisez HTTPS.";console.error(e)}
 }
