@@ -39,33 +39,55 @@ video{width:100%;height:100%;object-fit:cover}
 </div>
 <script>
 let stream=null,locked=false;
-const $=id=>document.getElementById(id);
-async function startApp(){
- try{
-  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});
-  $("video").srcObject=stream;
-    $("start").disabled=true;$("measure").disabled=false;$("reset").disabled=false;
-  $("status").textContent="Caméra active. Visez précisément l'objet à mesurer.";
- }catch(e){$("status").textContent="Caméra/capteurs non disponibles. Autorisez-les et utilisez HTTPS.";console.error(e)}
-}
-function measureNow(){
- if(locked)return;
 
- $("distance").textContent="TEST";
- $("method").textContent="Le bouton MESURER fonctionne";
- $("confidence").textContent="JavaScript actif";
- $("status").textContent="La commande MESURER est bien reçue.";
+const $=id=>document.getElementById(id);
+
+async function startApp(){
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:"environment"},
+      audio:false
+    });
+
+    $("video").srcObject=stream;
+
+    // La caméra fonctionne : on active immédiatement les boutons
+    $("start").disabled=true;
+    $("measure").disabled=false;
+    $("reset").disabled=false;
+
+    $("status").textContent="Caméra active. Visez précisément l'objet à mesurer.";
+
+  }catch(e){
+    console.error(e);
+    $("status").textContent="Erreur caméra : "+e.message;
+  }
 }
+
+function measureNow(){
+  if(locked)return;
+
+  $("distance").textContent="TEST";
+  $("method").textContent="Le bouton MESURER fonctionne";
+  $("confidence").textContent="JavaScript actif";
+  $("status").textContent="MESURER a bien été activé.";
+}
+
 function resetApp(){
- locked=false;$("distance").textContent="— —";$("method").textContent="Aucune mesure";
- $("confidence").textContent="Visez un objet et appuyez sur MESURER";
- $("measure").disabled=!stream;$("lock").disabled=true;
- $("status").textContent="Prêt pour une nouvelle mesure.";
+  locked=false;
+
+  $("distance").textContent="— —";
+  $("method").textContent="Aucune mesure";
+  $("confidence").textContent="Visez un objet et appuyez sur MESURER";
+
+  $("measure").disabled=!stream;
+  $("lock").disabled=true;
+
+  $("status").textContent="Prêt pour une nouvelle mesure.";
 }
+
 $("start").onclick=startApp;
-$("measure").onclick=function(){
-  alert("MESURER fonctionne !");
-};
+$("measure").onclick=measureNow;
 $("reset").onclick=resetApp;
 </script>
 </body>
